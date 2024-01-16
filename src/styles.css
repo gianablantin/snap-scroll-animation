@@ -1,0 +1,20 @@
+body {
+  background-color: black;
+}
+
+section {
+  box-sizing: border-box;
+  font-size: 3rem;
+  color: white;
+  margin-block: 0;
+}
+
+.content {
+  margin: 0;
+  padding: 3em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

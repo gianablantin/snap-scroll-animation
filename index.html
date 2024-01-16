@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+  <link rel="stylesheet" href="./src/styles.css" />
+
+  <style>
+    html {
+      scroll-snap-type: y mandatory;
+      timeline-scope: --section;
+    }
+
+    section {
+      scroll-snap-align: start;
+      view-timeline: --section;
+      height: 100dvh;
+    }
+
+    @keyframes effects {
+
+      0%,
+      100% {
+        filter: blur(6px) contrast(5);
+        opacity: 0;
+      }
+
+      50% {
+        filter: blur(0) contrast(1);
+        opacity: 1;
+      }
+    }
+
+    .content {
+      position: fixed;
+      inset: 0;
+
+      animation: effects ease-in;
+      animation-fill-mode: both;
+      animation-timeline: --section;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div class="content">
+      <img
+        src="https://images.unsplash.com/photo-1701730282717-f6478c8f2186?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MDh8&ixlib=rb-4.0.3&q=85&w=900"
+        alt="">
+      <p>section heading goes here</p>
+    </div>
+  </section>
+  <section>
+    <div class="content">
+      <img
+        src="https://images.unsplash.com/photo-1701970047560-085f3fcff0ba?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MDh8&ixlib=rb-4.0.3&q=85&w=900"
+        alt="">
+      <p>section number 2</p>
+    </div>
+  </section>
+  <section>
+    <div class="content">
+      <p>section number 3</p>
+    </div>
+  </section>
+  <section>
+    <div class="content">
+      <img
+        src="https://images.unsplash.com/photo-1702983189831-4b917e842fd3?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MzR8&ixlib=rb-4.0.3&q=85&w=900"
+        alt="">
+      <p>section number 4</p>
+    </div>
+  </section>
+  <section>
+    <div class="content">
+      <p>section number 5</p>
+    </div>
+  </section>
+  <script src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js"></script>
+</body>
+
+</html>
