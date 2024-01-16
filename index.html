@@ -9,16 +9,43 @@
 
   <style>
     html {
+      /* Creating a snapping rule on the html element */
       scroll-snap-type: y mandatory;
+
+      /* Create a timeline scope, so we can target any element on the page */
       timeline-scope: --section;
     }
 
+    /* We'll want to match these colors for the best melty effect */
+    /* But play around with them (and add a color to section) to see happens */
+    body,
+    .content {
+      background-color: black;
+    }
+
     section {
+      /* Creating a snapping rule on the section element */
       scroll-snap-align: start;
+
+      /* Attach the timeline to the section element*/
       view-timeline: --section;
+
+      /* Set each section to the full dynamic height of the viewport */
       height: 100dvh;
     }
 
+    .content {
+      /* Fix the content, so they don't scroll with the section */
+      position: fixed;
+      inset: 0;
+
+      /* Animate the content based on the section scrolling */
+      animation: effects ease-in;
+      animation-fill-mode: both;
+      animation-timeline: --section;
+    }
+
+    /* The animation */
     @keyframes effects {
 
       0%,
@@ -31,15 +58,7 @@
         filter: blur(0) contrast(1);
         opacity: 1;
       }
-    }
 
-    .content {
-      position: fixed;
-      inset: 0;
-
-      animation: effects ease-in;
-      animation-fill-mode: both;
-      animation-timeline: --section;
     }
   </style>
 </head>
