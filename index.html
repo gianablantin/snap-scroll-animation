@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vite + TS</title>
+
   <link rel="stylesheet" href="./src/styles.css" />
 
   <style>
@@ -14,16 +15,19 @@
 
       /* Create a timeline scope, so we can target any element on the page */
       timeline-scope: --section;
+
+      /* Set the contrast level globally */
+      --contrast: 6;
     }
 
     /* We'll want to match these colors for the best melty effect */
     /* But play around with them (and add a color to section) to see happens */
     body,
     .content {
-      background-color: black;
+      background-color: var(--color-background, black);
     }
 
-    section {
+    .section {
       /* Creating a snapping rule on the section element */
       scroll-snap-align: start;
 
@@ -40,64 +44,108 @@
       inset: 0;
 
       /* Animate the content based on the section scrolling */
-      animation: effects ease-in;
+      animation: effects linear;
       animation-fill-mode: both;
       animation-timeline: --section;
     }
 
-    /* The animation */
     @keyframes effects {
 
       0%,
       100% {
-        filter: blur(6px) contrast(5);
+        filter: blur(6px) contrast(var(--contrast));
         opacity: 0;
+        visibility: hidden;
       }
 
       50% {
         filter: blur(0) contrast(1);
         opacity: 1;
+        visibility: visible;
       }
 
+    }
+
+
+    @keyframes effects-alternate {
+
+      0%,
+      100% {
+        filter: blur(6px) contrast(1);
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      50% {
+        /* Compensate for global contrast */
+        filter: blur(0) contrast(calc(1 / var(--contrast)));
+        opacity: 1;
+        visibility: visible;
+      }
+
+    }
+
+    .alternate {
+      .content {
+        animation: effects-alternate linear;
+        animation-fill-mode: both;
+        animation-timeline: --section;
+      }
+
+      /* 
+        By putting the contrast filter above everything, including sections mid-opacity,
+        we end up with a more cohesive effect at the cost of performance.
+      */
+      main::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        backdrop-filter: contrast(var(--contrast));
+      }
     }
   </style>
 </head>
 
 <body>
-  <section>
-    <div class="content">
-      <img
-        src="https://images.unsplash.com/photo-1701730282717-f6478c8f2186?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MDh8&ixlib=rb-4.0.3&q=85&w=900"
-        alt="">
-      <p>section heading goes here</p>
-    </div>
-  </section>
-  <section>
-    <div class="content">
-      <img
-        src="https://images.unsplash.com/photo-1701970047560-085f3fcff0ba?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MDh8&ixlib=rb-4.0.3&q=85&w=900"
-        alt="">
-      <p>section number 2</p>
-    </div>
-  </section>
-  <section>
-    <div class="content">
-      <p>section number 3</p>
-    </div>
-  </section>
-  <section>
-    <div class="content">
-      <img
-        src="https://images.unsplash.com/photo-1702983189831-4b917e842fd3?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MzR8&ixlib=rb-4.0.3&q=85&w=900"
-        alt="">
-      <p>section number 4</p>
-    </div>
-  </section>
-  <section>
-    <div class="content">
-      <p>section number 5</p>
-    </div>
-  </section>
+  <main>
+    <section class="section">
+      <div class="content">
+        <img
+          src="https://images.unsplash.com/photo-1701730282717-f6478c8f2186?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MDh8&ixlib=rb-4.0.3&q=85&w=900"
+          alt="">
+        <p>section heading goes here</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="content">
+        <img
+          src="https://images.unsplash.com/photo-1701970047560-085f3fcff0ba?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MDh8&ixlib=rb-4.0.3&q=85&w=900"
+          alt="">
+        <p>section number 2</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="content">
+        <p>section number 3</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="content">
+        <img
+          src="https://images.unsplash.com/photo-1702983189831-4b917e842fd3?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDUzNzM5MzR8&ixlib=rb-4.0.3&q=85&w=900"
+          alt="">
+        <p>section number 4</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="content">
+        <p>section number 5</p>
+      </div>
+    </section>
+
+  </main>
+
   <script src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js"></script>
 </body>
 
