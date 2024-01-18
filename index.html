@@ -17,7 +17,8 @@
       timeline-scope: --section;
 
       /* Set the contrast level globally */
-      --contrast: 6;
+      --contrast: 4;
+      --blur: 0.4rem;
     }
 
     /* We'll want to match these colors for the best melty effect */
@@ -44,16 +45,18 @@
       inset: 0;
 
       /* Animate the content based on the section scrolling */
-      animation: effects linear;
+      animation: blink linear;
       animation-fill-mode: both;
       animation-timeline: --section;
+
+      transform-origin: top center;
     }
 
     @keyframes blink {
 
       0%,
       100% {
-        filter: blur(6px) contrast(var(--contrast));
+        filter: blur(var(--blur)) contrast(var(--contrast));
         opacity: 0;
         visibility: hidden;
       }
@@ -116,20 +119,13 @@
 
     }
 
-    .alternate {
-      .content {
-        animation: effects-alternate linear;
-        animation-fill-mode: both;
-        animation-timeline: --section;
-      }
-
-      /* 
+    .alternate {      /* 
         By putting the contrast filter above everything, including sections mid-opacity,
         we end up with a more cohesive effect at the cost of performance.
       */
       main::after {
         content: '';
-        position: absolute;
+        position: fixed;
         inset: 0;
         pointer-events: none;
         backdrop-filter: contrast(var(--contrast));
