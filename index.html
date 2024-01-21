@@ -10,15 +10,11 @@
 
   <style>
     html {
-      /* Creating a snapping rule on the html element */
+      /* Create a snapping rule on the html element */
       scroll-snap-type: y mandatory;
 
       /* Create a timeline scope, so we can target any element on the page */
       timeline-scope: --section;
-
-      /* Set the contrast level globally */
-      --contrast: 4;
-      --blur: 0.4rem;
     }
 
     /* We'll want to match these colors for the best melty effect */
@@ -31,6 +27,7 @@
     .section {
       /* Creating a snapping rule on the section element */
       scroll-snap-align: start;
+      scroll-snap-stop: always;
 
       /* Attach the timeline to the section element*/
       view-timeline: --section;
@@ -40,12 +37,15 @@
     }
 
     .content {
-      /* Fix the content, so they don't scroll with the section */
+      /* Fix the content, so it doesn't scroll with the section */
       position: fixed;
       inset: 0;
 
       /* Animate the content based on the section scrolling */
-      animation: blink linear;
+      --contrast: 4;
+      --blur: 0.5rem;
+
+      animation: blink ease-in-out;
       animation-fill-mode: both;
       animation-timeline: --section;
 
