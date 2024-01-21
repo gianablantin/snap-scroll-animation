@@ -1,0 +1,119 @@
+@layer rhythm {
+  /*
+    Responsive typography with vertical rhythm
+  */
+  * {
+    /* Step 1: Establish individual responsive font-size */
+  
+    /* 
+      Min and max font sizes to screen sizes 
+      That is, font size will be 16px at 320px screen width and 20px at 1440px screen width
+      These values can be customized on each element to automatically update the formula
+    */
+    --font-size-min: 16;
+    --font-size-max: 20;
+    --font-size-min-viewport: 320;
+    --font-size-max-viewport: 1440;
+  
+    /* 
+      Converting from px to rem automatically for convenience and accessibility
+      If you want to set font-sizes in rem units from the start, you can set --font-size-units to 1rem
+      Default 1rem = 16px, so 1px = 0.0625rem 
+    */
+    --font-size-units: calc(0.0625rem);
+  
+    /* Math. Don't worry about it. And don't touch. */
+    --_font-size-step: calc( 
+      (var(--font-size-max) - var(--font-size-min)) / 
+      (var(--font-size-max-viewport) - var(--font-size-min-viewport))
+    );
+  
+    --_font-size-base-value: calc(
+      var(--font-size-min) - 
+      var(--font-size-min-viewport) * 
+      var(--_font-size-step)
+    );
+  
+    /* 
+      Create font-size custom prop on all elements
+       All elements can now use the --font-size prop
+  
+       What's more, we can tweak the values established above such as 
+       --font-size-min and --font-size-max, and the formula will update automatically
+       The same applies to the viewport units --font-size-min-viewport and --font-size-max-viewport
+       We can even set a custom --font-size prop on any element, and it will override the default 
+    */
+  
+    --font-size: clamp(
+      min(var(--font-size-min), var(--font-size-max)) * var(--font-size-units),
+      var(--_font-size-base-value) * var(--font-size-units) + var(--_font-size-step) * 100vw,
+      max(var(--font-size-max), var(--font-size-min)) * var(--font-size-units)
+    );
+  
+    /* Using ems to lock current line-height to current font-size */
+    --line-height-units: 1em;
+  
+    /* Min and max line-height */
+    --line-height-min: 1.2;
+    --line-height-max: 1.6;
+  
+    /* Same viewport boundaries as font-size, using font-size values to convert from pixels */
+    --line-height-min-viewport: calc(320 / var(--font-size-min));
+    --line-height-max-viewport: calc(1440 / var(--font-size-max));
+  
+    /* You know the drill. No touchy. */
+    --_line-height-step: calc(
+      (var(--line-height-max) - var(--line-height-min)) / 
+      (var(--line-height-max-viewport) - var(--line-height-min-viewport))
+    );
+  
+    --_line-height-base-value: calc(
+      var(--line-height-min) - 
+      var(--line-height-min-viewport) * 
+      var(--_line-height-step)
+    );
+  
+    /* 
+      Just like with --font-size, all elements will now have access to responsive line-height
+      And we can tweak the values established above such as --line-height-min and --line-height-max
+    */
+    --line-height: clamp(
+      min(var(--line-height-min), var(--line-height-max)) * var(--line-height-units),
+      var(--_line-height-base-value) * var(--line-height-units) + var(--_line-height-step) * 100vw,
+      max(var(--line-height-max), var(--line-height-min)) * var(--line-height-units)
+    );
+  }
+  
+  body {
+    /* We can now set font-size and line-height to their respective props */
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+  
+    /* 
+      These are our new rem-units and can be used whenever needed to refer to responsive body-font
+      NOTE: Please treat this as a CONST and do not edit or overwrite 
+    */
+    --RHYTHM_UNITS: var(--font-size);
+  
+    /* 
+      Create rhythm by locking to body line-height
+      This unit can now be used anywhere to refer back to the original body line-height
+      and thus establish a vertical rhythm
+      NOTE: Please treat this as a CONST and do not edit or overwrite
+    */
+    --RHYTHM: clamp(
+      min(var(--line-height-min), var(--line-height-max)) * var(--RHYTHM_UNITS),
+      var(--_line-height-base-value) * var(--RHYTHM_UNITS) + var(--_line-height-step) * 100vw,
+      max(var(--line-height-max), var(--line-height-min)) * var(--RHYTHM_UNITS)
+    );
+  
+    /* Here, a safe prop you can overwrite and play with as needed */
+    --spacing: var(--RHYTHM);
+
+    /* Let's save these just in case we need them */
+    --base-font-size-min: var(--font-size-min);
+    --base-font-size-max: var(--font-size-max);
+    --base-line-height-min: var(--line-height-min);
+    --base-line-height-max: var(--line-height-max);
+  }
+}

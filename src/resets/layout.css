@@ -1,0 +1,54 @@
+/*
+ * Custom properties used
+ * Be sure to set these to customize the reset otherwise the defaults will be used
+ *
+ * --section-spacing-multiplier: 1, 2, 3, 4 (media queries)
+ * --section-spacing: calc(var(--spacing, 1.5rem) * var(--section-spacing-multiplier));
+ * --max-content-width: 100rem
+ *
+ */
+
+/*----------  Page elements  ----------*/
+
+@layer layout {
+  header,
+  main,
+  section,
+  article,
+  aside,
+  nav,
+  form,
+  div,
+  footer {
+    /* Creates section spacing variable for section-like elements */
+    --section-spacing-multiplier: 1;
+    --section-spacing: calc(var(--spacing, 1.5rem) * var(--section-spacing-multiplier));
+
+    @media (min-width: 40em) {
+      --section-spacing-multiplier: 2;
+    }
+
+    @media (min-width: 60em) {
+      --section-spacing-multiplier: 3;
+    }
+
+    @media (min-width: 80em) {
+      --section-spacing-multiplier: 4;
+    }
+
+    @media (min-width: 100em) {
+      --section-spacing-multiplier: 5;
+    }
+  }
+
+  header,
+  section,
+  footer {
+    /* Limit width of an element while maintaining padding and centering */
+    padding-inline: max(var(--section-spacing), calc(50% - var(--max-content-width, 100rem) / 2));
+  }
+
+  section {
+    padding-block: var(--section-spacing);
+  }
+}

@@ -1,0 +1,109 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-block: var(--spacing);
+  padding-inline: inherit;
+  position: relative;
+  height: 100%;
+
+  @media (min-width: 800px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  strong,
+  code {
+    color: var(--color-highlight);
+  }
+
+  .selector {
+    --color-property: var(--color-highlight);
+
+    color: var(--color-selector);
+  }
+
+  .property {
+    --color-property: var(--color-highlight);
+
+    color: var(--color-property);
+  }
+
+}
+
+h2,
+.text {
+  /* Making space for the scroll indicators */
+  padding-inline-end: calc(var(--min-tap-size) + var(--spacing));
+
+  @media (min-width: 80em) {
+    padding-inline-end: 0;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    padding-inline-end: 0;
+  }
+}
+
+h2 {
+  margin-block-start: 0;
+
+  @media (min-width: 800px) {
+    flex: 1;
+  }
+}
+
+.text {
+  @media (min-width: 800px) {
+    padding-block-start: var(--spacing);
+    align-self: flex-start;
+    flex: 1;
+    z-index: -1;
+
+    img {
+      --intrinsic-width: 587;
+      --intrinsic-height: 930;
+
+      float: inline-start;
+      height: min(100dvi, 30vw * var(--instrinsic-height) / var(--intrinsic-width));
+      margin-left: calc((1 - var(--intrinsic-width) / var(--intrinsic-height)) * -100%);
+      shape-outside: var(--image);
+      shape-margin: var(--spacing);
+    }
+
+    p:first-of-type {
+      margin-top: 20dvi;
+    }
+  }
+}
+
+section:nth-child(1) {
+  --color-highlight: var(--color-primary);
+  --color-selector: var(--color-secondary);
+  --image: url('../src/img/flower-white.png');
+}
+
+section:nth-child(2) {
+  --color-highlight: var(--color-yellow);
+  --color-selector: var(--color-green);
+  --image: url('../src/img/flower-yellow.png');
+}
+
+section:nth-child(3) {
+  --color-highlight: var(--color-secondary);
+  --color-selector: var(--color-primary);
+  --image: url('../src/img/flower-blue.png');
+}
+
+section:nth-child(4) {
+  --color-highlight: var(--color-red);
+  --color-selector: var(--color-green-2);
+  --image: url('../src/img/flower-red.png');
+}
+
+section:nth-child(5) {
+  --color-highlight: var(--color-primary);
+  --color-selector: var(--color-secondary);
+  --image: url('../src/img/flower-white-2.png');
+}

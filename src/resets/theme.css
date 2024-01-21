@@ -1,0 +1,142 @@
+@layer base, rhythm, layout, components, default, overwrites;
+
+/*
+ * This file should control the site-specific variables, colors, fonts etc
+ * It should not contain any specific styles for pages, sections, or components
+ */
+
+@layer base {
+  :root {
+    /*
+    * Fonts and text
+    */
+    --font-family-default: 'Noto Sans Display', Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+    --font-family-heading: 'Fraunces', Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+    --font-family-monospace: 'Nimbus Mono PS', 'Courier New', monospace;
+
+    --font-size-default: var(--font-size);
+    --line-height-default: var(--line-height);
+
+    /*
+    * Spacing / rhythm
+    */
+    --spacing: var(--RHYTHM);
+    --max-content-width: 100rem;
+    --max-reading-measure: 50ch;
+    --min-tap-size: 48px;
+    --min-tap-space: 8px;
+
+    /*
+    * Colors
+    */
+    --color-background: #000;
+    --color-text: #fff0f4;
+    --color-primary: oklch(74% 0.15 32);
+    --color-secondary: oklch(77% 0.13 210);
+
+    --color-yellow: oklch(80% 0.16 85);
+    --color-green: oklch(60% 0.16 135);
+    --color-red: oklch(65% 0.18 15);
+    --color-green-2: oklch(54% 0.11 164);
+
+    --color-link: var(--color-primary);
+    --color-link-hover: var(--color-secondary);
+
+    --color-scrollbar-foreground: var(--color-primary);
+
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-scrollbar-foreground, hsla(0, 0%, 0%, 0.75)) var(--color-scrollbar-background, transparent);
+
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-size, 10px);
+      height: var(--scrollbar-size, 10px);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-scrollbar-foreground, hsla(0, 0%, 0%, 0.75));
+      border-radius: calc(var(--scrollbar-size, 10px) / 2);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--color-scrollbar-background, transparent);
+    }
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+}
+
+@layer rhythm {
+  body {
+    --font-size-min: 16;
+    --font-size-max: 20;
+
+    --line-height-min: 1.2;
+    --line-height-max: 1.6;
+
+    /* 
+      Useful heading scales
+      Golden Ratio: 1.618
+      Minor Sixth: 1.6
+      Perfect Fifth: 1.5
+      Augmented Fourth: 1.414
+      Perfect Fourth: 1.333
+      Major Third: 1.25
+      Minor Third: 1.2
+      Major Second: 1.125
+      Minor Second: 1.067
+
+      Once CSS pow() is supported, we can use the following formula to create a scale:
+      --min-font-size: pow(var(--base-font-size-min) * var(--min-heading-scale)), var(--heading-level));
+      --max-font-size: pow(var(--base-font-size-max) * var(--max-heading-scale)), var(--heading-level));
+    */
+
+    --pl: 1.25;
+    --pu: 1.6;
+
+    --s1-min: calc(var(--base-font-size-min) / var(--pl));
+    --s1-max: calc(var(--base-font-size-max) / var(--pu));
+
+    --h6-min: var(--base-font-size-min);
+    --h6-max: var(--base-font-size-max);
+
+    --h5-min: calc(var(--base-font-size-min) * var(--pl));
+    --h5-max: calc(var(--base-font-size-max) * var(--pu));
+
+    --h4-min: calc(var(--h5-min) * var(--pl));
+    --h4-max: calc(var(--h5-max) * var(--pu));
+
+    --h3-min: calc(var(--h4-min) * var(--pl));
+    --h3-max: calc(var(--h4-max) * var(--pu));
+
+    --h2-min: calc(var(--h3-min) * var(--pl));
+    --h2-max: calc(var(--h3-max) * var(--pu));
+
+    --h1-min: calc(var(--h2-min) * var(--pl));
+    --h1-max: calc(var(--h2-max) * var(--pu));
+  }
+
+  h1,
+  h2 {
+    --color-text: var(--color-primary);
+    --line-height-min: 1.25;
+    --line-height-max: 1;
+
+    font-size: var(--font-size);
+    font-weight: 200;
+    line-height: var(--line-height);
+    padding-block: calc(var(--grid-correction, 0) / 2);
+  }
+
+  h1 {
+    --font-size-min: var(--h1-min);
+    --font-size-max: var(--h1-max);
+  }
+
+  h2 {
+    --font-size-min: var(--h2-min);
+    --font-size-max: var(--h2-max);
+  }
+}
