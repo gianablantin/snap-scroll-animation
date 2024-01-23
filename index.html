@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="./src/resets/layout.css" />
   <link rel="stylesheet" href="./src/page.css" />
   <link rel="stylesheet" href="./src/sections.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..400;1,9..144,100..400&family=Noto+Sans+Display:wght@300..500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..400;1,9..144,100..400&family=Noto+Sans+Display:wght@200..700&display=swap" rel="stylesheet">
   <style>
     html {
       /* Create a snapping rule on the html element */
@@ -45,6 +45,7 @@
 
     .content {
       /* Fix the content, so it doesn't scroll with the section */
+      overflow: hidden;
       position: fixed;
       inset: 0;
 
@@ -57,11 +58,35 @@
       animation-timeline: --section;
     }
 
+    @keyframes blink {
+
+      0%,
+      100% {
+        filter: blur(var(--blur)) contrast(var(--contrast));
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      50% {
+        filter: blur(0) contrast(1);
+        opacity: 1;
+        visibility: visible;
+      }
+
+    }
+
+    /* 
+      This is a bit of a hack to get the indicator to work because I'm lazy.
+      We're translating the dot from the top to the bottom of its parent,
+      using the browser scroll position as the animation timeline.
+      It's not really matched up to the scrolling sections, only appears to be.
+    */
     .indicator::before {
       animation: indicate linear;
       animation-timeline: scroll();
     }
 
+    /* And we're manually setting the colors because see: lazy comment above */
     @keyframes indicate {
       0% {
         --color-indicator: var(--color-primary);
@@ -86,41 +111,35 @@
       }
     }
 
-    @keyframes blink {
+    /* Change animation based on radio checked */
 
-      0%,
-      100% {
-        filter: blur(var(--blur)) contrast(var(--contrast));
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      50% {
-        filter: blur(0) contrast(1);
-        opacity: 1;
-        visibility: visible;
-      }
+    body:has([value=horizontal-scroll]:checked) .content {
+      animation-name: horizontal-scroll;
+      /* 
+        The only reason we're repeat these two properties instead of using 
+        the default values already set is so the polyfill will pick them up 
+      */
+      animation-fill-mode: both;
+      animation-timeline: --section;
 
     }
 
-    @keyframes blink-alternate {
-
-      0%,
-      100% {
-        filter: blur(6px) contrast(1);
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      50% {
-        /* Compensate for global contrast */
-        filter: blur(0) contrast(calc(1 / var(--contrast)));
-        opacity: 1;
-        visibility: visible;
-      }
+    body:has([value=backwards-scroll]:checked) .content {
+      animation-name: backwards-scroll;
+      animation-fill-mode: both;
+      animation-timeline: --section;
 
     }
 
+    body:has([value=zoom-scroll]:checked) .content {
+      animation-name: zoom-scroll;
+      animation-fill-mode: both;
+      animation-timeline: --section;
+
+    }
+
+    /* Alternative animations */
+    /* Very cool, try it */
     @keyframes horizontal-scroll {
 
       0% {
@@ -137,6 +156,7 @@
 
     }
 
+    /* Befuddling, try it */
     @keyframes backwards-scroll {
 
       0% {
@@ -153,24 +173,47 @@
 
     }
 
-    @keyframes delayed-scroll {
+    /* WIP */
+    @keyframes zoom-scroll {
 
       0% {
-        opacity: 0;
-        filter: blur(10px);
+        filter: blur(5rem);
         transform: scale(0);
+        opacity: 0;
+        visibility: hidden;
       }
 
       50% {
-        opacity: 1;
-        filter: blur(0px);
+        filter: blur(0);
         transform: none;
+        opacity: 1;
+        visibility: visible;
       }
 
       100% {
+        filter: blur(3rem);
+        transform: scale(1.5);
         opacity: 0;
-        filter: blur(20px);
-        transform: scale(2);
+        visibility: hidden;
+      }
+
+    }
+
+    /* WIP, trying to get the sections to melt together*/
+    @keyframes blink-alternate {
+
+      0%,
+      100% {
+        filter: blur(6px) contrast(1);
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      50% {
+        /* Compensate for global contrast */
+        filter: blur(0) contrast(calc(1 / var(--contrast)));
+        opacity: 1;
+        visibility: visible;
       }
 
     }
@@ -196,6 +239,23 @@
   <header class="site-header">
     <h1>Snapping scroll animation demo</h1>
 
+    <fieldset>
+      <legend class="sr-only">Effects</legend>
+
+      <!-- radio buttons for each of the @keyframes above -->
+      <input type="radio" id="blink-effect" name="effect" value="blink" checked class="sr-only">
+      <label for="blink-effect">Blink</label>
+
+      <input type="radio" id="horizontal-scroll-effect" name="effect" value="horizontal-scroll" class="sr-only">
+      <label for="horizontal-scroll-effect">Horizontal scroll</label>
+
+      <input type="radio" id="backwards-scroll-effect" name="effect" value="backwards-scroll" class="sr-only">
+      <label for="backwards-scroll-effect">Backwards scroll</label>
+
+      <input type="radio" id="zoom-scroll-effect" name="effect" value="zoom-scroll" class="sr-only">
+      <label for="zoom-scroll-effect">Zoom scroll</label>
+    </fieldset>
+
     <nav>
       <ul class="indicator">
         <li><a href="#snapping"><span class="sr-only">Snapping</span></a></li>
@@ -213,9 +273,9 @@
 
         <div class="text">
           <img src="src/img/flower-white.png" alt="">
-          <p>We set the scrolling element, in this case our <code class="selector">HTML</code> element to forcibly snap to the Y axis by using <code class="property">scroll-snap-type: y mandatory</code></p>
+          <p>We set the scrolling element, in this case our <code class="selector">HTML</code> element to forcibly snap to the Y axis by using <code class="property">scroll-snap-type: y mandatory</code>.</p>
 
-          <p>And then we set <code class="selector">section</code> as the snapping elements by using <code class="property">scroll-snap-align: start;</code>.</p>
+          <p>And then we set <code class="selector">section</code> as the snapping elements by using <code class="property">scroll-snap-align: start</code>.</p>
         </div>
       </div>
     </section>
@@ -225,9 +285,10 @@
 
         <div class="text">
           <img src="src/img/flower-yellow.png" alt="">
-          <p>We set the scrolling element, in this case our <code class="selector">HTML</code> element to forcibly snap to the Y axis by using <code class="property">scroll-snap-type: y mandatory</code></p>
+          <p>We set the scrolling element, in this case our <code class="selector">section</code> elements, to track their view() position inside the browser using <code class="property">view-timeline: --section;</code>. We had previous set the <code class="property">timeline-scope: --section</code> up in our <code class="selector">HTML</code> element, so we can access it from anywhere in the document.</p>
 
-          <p>And then we set <code class="selector">section</code> as the snapping elements by using <code class="property">scroll-snap-align: start;</code>.</p>
+          <p>And then we set the child <code class="selector">.content</code> as the animated element using <code class="property">animation-timeline: --section;
+</code>. The <code class="selector">.content</code> element will now animate based on its parent <code class="selector">section</code>'s position. This is important due to how we're handling the layout in the next section.</p>
         </div>
       </div>
     </section>
@@ -237,9 +298,9 @@
 
         <div class="text">
           <img src="src/img/flower-blue.png" alt="">
-          <p>We set the scrolling element, in this case our <code class="selector">HTML</code> element to forcibly snap to the Y axis by using <code class="property">scroll-snap-type: y mandatory</code></p>
+          <p>We set the <code class="selector">.content</code> elements to <code class="property">position: fixed</code>, so they're removed from the normal document flow and stack on top of each other. We give them a solid background, so we can see only one at a time.</p>
 
-          <p>And then we set <code class="selector">section</code> as the snapping elements by using <code class="property">scroll-snap-align: start;</code>.</p>
+          <p>Their parent <code class="selector">section</code>s are positioned as normal, taking up space, scroll-snapping, and powering the <code class="property">animation-timeline</code>.</p>
         </div>
       </div>
     </section>
@@ -249,9 +310,9 @@
 
         <div class="text">
           <img src="src/img/flower-red.png" alt="">
-          <p>We set the scrolling element, in this case our <code class="selector">HTML</code> element to forcibly snap to the Y axis by using <code class="property">scroll-snap-type: y mandatory</code></p>
+          <p>By setting the <code class="selector">.content</code> elements to <code class="property">position: fixed</code>, we can now transition between them without a visible scrolling movement.</p>
 
-          <p>And then we set <code class="selector">section</code> as the snapping elements by using <code class="property">scroll-snap-align: start;</code>.</p>
+          <p>We create a normal <code class="selector">@keyframe</code> animation with opacity and use <code class="property">filter: blur(0.5rem) contrast(4)</code> to create a sort of fade-in-out style with some extra pizzaz.</p>
         </div>
       </div>
     </section>
@@ -260,10 +321,13 @@
         <h2><strong>Caveats</strong></h2>
 
         <div class="text">
-          <img src="src/img/flower-white-2.png" alt="">
-          <p>We set the scrolling element, in this case our <code class="selector">HTML</code> element to forcibly snap to the Y axis by using <code class="property">scroll-snap-type: y mandatory</code></p>
-
-          <p>And then we set <code class="selector">section</code> as the snapping elements by using <code class="property">scroll-snap-align: start;</code>.</p>
+          <img src="src/img/flower-purple.png" alt="">
+          <ul>
+            <li>Scrolling animations are not currently available in Firefox. This demo is using a pollyfill.</li>
+            <li>This is a somewhat fragile layout since we're using <code class="selector">position: fixed</code>. You need to carefully manage stacking contexts</li>
+            <li>Snapping points have their own caveats, such as concerns regarding scroll hijacking and content taller than the viewport becoming inaccessible.</li>
+            <li>This particular effect uses the <code class="property">contrast()</code> filter, which modifies the colors of the entire section. That's why the background is set to black (or can be set to white): at max contrast already, the background won't appear to change during transition.</li>
+          </ul>
         </div>
       </div>
     </section>

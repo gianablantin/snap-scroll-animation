@@ -33,6 +33,7 @@
     --color-text: #fff0f4;
     --color-primary: oklch(74% 0.15 32);
     --color-secondary: oklch(77% 0.13 210);
+    --color-ui: oklch(64.94% 0.054 220.65);
 
     --color-yellow: oklch(80% 0.16 85);
     --color-green: oklch(60% 0.16 135);

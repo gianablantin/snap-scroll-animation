@@ -18,6 +18,10 @@
     color: var(--color-highlight);
   }
 
+  code {
+    font-family: var(--font-family-default);
+  }
+
   .selector {
     --color-property: var(--color-highlight);
 
@@ -30,6 +34,25 @@
     color: var(--color-property);
   }
 
+  ul {
+    --font-size-min: 14;
+    --font-size-max: 16;
+
+    font-size: var(--font-size);
+    font-weight: 400;
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: calc(var(--spacing) / 2);
+
+    &::marker {
+      content: '🌷 ';
+      color: var(--color-highlight);
+    }
+  }
 }
 
 h2,
@@ -48,6 +71,7 @@ h2,
 
 h2 {
   margin-block-start: 0;
+  text-shadow: 1px 2px 0.1em hsla(0, 0%, 0%, 0.5);
 
   @media (min-width: 800px) {
     flex: 1;
@@ -55,25 +79,33 @@ h2 {
 }
 
 .text {
+  --intrinsic-width: 587;
+  --intrinsic-height: 930;
+  --height: min(100dvb, 33vw * var(--intrinsic-height) / var(--intrinsic-width));
+  --offset: calc(var(--height) / 3);
+  position: relative;
+
   @media (min-width: 800px) {
+    font-weight: 200;
     padding-block-start: var(--spacing);
-    align-self: flex-start;
     flex: 1;
     z-index: -1;
 
     img {
-      --intrinsic-width: 587;
-      --intrinsic-height: 930;
-
       float: inline-start;
-      height: min(100dvi, 30vw * var(--instrinsic-height) / var(--intrinsic-width));
+      height: var(--height);
       margin-left: calc((1 - var(--intrinsic-width) / var(--intrinsic-height)) * -100%);
       shape-outside: var(--image);
       shape-margin: var(--spacing);
-    }
+      opacity: 0.65;
 
-    p:first-of-type {
-      margin-top: 20dvi;
+      /* TODO: Fix this */
+      /* This doesn't work with shape-outside in Chrome */
+      /* It does work in Firefox */
+      /* Something about the margin box, and Chrome defaulting to 0 on negative margins */
+      position: relative;
+      top: var(--offset);
+      margin-top: calc(var(--offset) * -2);
     }
   }
 }
@@ -88,6 +120,7 @@ section:nth-child(2) {
   --color-highlight: var(--color-yellow);
   --color-selector: var(--color-green);
   --image: url('../src/img/flower-yellow.png');
+  --margin-top: 10dvi;
 }
 
 section:nth-child(3) {
@@ -105,5 +138,6 @@ section:nth-child(4) {
 section:nth-child(5) {
   --color-highlight: var(--color-primary);
   --color-selector: var(--color-secondary);
-  --image: url('../src/img/flower-white-2.png');
+  --image: url('../src/img/flower-purple.png');
+  --margin-top: 10dvi;
 }
