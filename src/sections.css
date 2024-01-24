@@ -125,6 +125,12 @@ h2 {
     }
   }
 
+  @media (min-width: 64rem) and (min-height: 45rem) {
+    img + * {
+      margin-top: calc(var(--spacing) * 4);
+    }
+  }
+
   @media (min-width: 90rem) and (min-height: 35rem) {
     img + * {
       margin-top: var(--offset);
