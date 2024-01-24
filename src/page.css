@@ -67,19 +67,25 @@ h1 {
   height: 1px;
 }
 
+
 nav {
-  --indicator-size: 1em;
-  --indicator-padding: calc((var(--min-tap-size) - var(--indicator-size)) / 2);
-  --indicator-gap: var(--min-tap-space);
   --indicator-number: 5;
-  --indicator-total-height: calc(var(--min-tap-size) * var(--indicator-number));
   --indicator-top: 50dvb;
   --indicator-right: var(--spacing);
+
+  --indicator-size: 1em;
+  --indicator-padding: calc((var(--min-tap-size) - var(--indicator-size)) / 2);
+  --indicator-clipped-margins: var(--indicator-padding) * 2;
+  --indicator-total-size: calc(var(--indicator-size) + var(--indicator-padding) * 2);
+
+  --indicator-gap: var(--min-tap-space);
+  --indicator-total-gap: calc(var(--indicator-gap) * (var(--indicator-number) - 1));
+
+  --indicator-total-height: calc(var(--indicator-total-size) * var(--indicator-number) + var(--indicator-total-gap) - var(--indicator-clipped-margins));
 
   /* Make indicators smaller when mouse is being used */
   @media (pointer: fine) {
     --indicator-padding: 0.25em;
-    --indicator-total-height: calc((var(--indicator-size) + var(--indicator-padding) * 2) * var(--indicator-number) + (var(--indicator-number) - 2) * var(--indicator-gap));
   }
 
   position: fixed;

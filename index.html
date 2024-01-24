@@ -21,7 +21,7 @@
       scroll-snap-type: y mandatory;
 
       /* Create a timeline scope, so we can target any element on the page */
-      timeline-scope: --section;
+      timeline-scope: --section, --main;
     }
 
     /* We'll want to match these colors for the best melty effect */
@@ -29,6 +29,10 @@
     body,
     .content {
       background-color: var(--color-background, black);
+    }
+
+    main {
+      view-timeline: --main;
     }
 
     .section {
@@ -82,8 +86,9 @@
       It's not really matched up to the scrolling sections, only appears to be.
     */
     .indicator::before {
-      animation: indicate linear;
-      animation-timeline: scroll();
+      animation: indicate linear both;
+      animation-timeline: --main;
+      animation-range: contain;
     }
 
     /* And we're manually setting the colors because see: lazy comment above */
@@ -106,8 +111,11 @@
       }
 
       100% {
-        --color-indicator: var(--color-text);
-        transform: translateY(calc(var(--indicator-total-height) - 100%));
+        --color-indicator: var(--color-purple);
+        transform: translateY(calc(var(--indicator-total-height) - var(--indicator-size)));
+      }
+    }
+
       }
     }
 
