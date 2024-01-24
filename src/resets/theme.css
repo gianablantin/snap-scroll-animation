@@ -14,13 +14,6 @@
     --font-family-heading: 'Fraunces', Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
     --font-family-monospace: 'Nimbus Mono PS', 'Courier New', monospace;
 
-    --font-size-default: var(--font-size);
-    --line-height-default: var(--line-height);
-
-    /*
-    * Spacing / rhythm
-    */
-    --spacing: var(--RHYTHM);
     --max-content-width: 100rem;
     --max-reading-measure: 50ch;
     --min-tap-size: 48px;
@@ -32,18 +25,20 @@
     --color-background: #000;
     --color-text: #fff0f4;
     --color-primary: oklch(74% 0.15 32);
-    --color-secondary: oklch(77% 0.13 210);
-    --color-ui: oklch(64.94% 0.054 220.65);
+    --color-secondary: oklch(65% 0.13 210);
+    --color-ui: oklch(65% 0.05 210);
 
     --color-yellow: oklch(80% 0.16 85);
     --color-green: oklch(60% 0.16 135);
     --color-red: oklch(65% 0.18 15);
     --color-green-2: oklch(54% 0.11 164);
+    --color-purple: oklch(62% 0.15 318);
+    --color-red-2: oklch(57% 0.2 15);
 
     --color-link: var(--color-primary);
     --color-link-hover: var(--color-secondary);
 
-    --color-scrollbar-foreground: var(--color-primary);
+    --color-scrollbar-foreground: var(--color-ui);
 
     scrollbar-width: auto;
     scrollbar-color: var(--color-scrollbar-foreground, hsla(0, 0%, 0%, 0.75)) var(--color-scrollbar-background, transparent);
@@ -77,6 +72,14 @@
     --line-height-min: 1.2;
     --line-height-max: 1.6;
 
+    --font-size-default: var(--font-size);
+    --line-height-default: var(--line-height);
+
+    /*
+    * Spacing / rhythm
+    */
+    --spacing: var(--RHYTHM);
+
     /* 
       Useful heading scales
       Golden Ratio: 1.618
@@ -94,7 +97,7 @@
       --max-font-size: pow(var(--base-font-size-max) * var(--max-heading-scale)), var(--heading-level));
     */
 
-    --pl: 1.25;
+    --pl: 1.125;
     --pu: 1.6;
 
     --s1-min: calc(var(--base-font-size-min) / var(--pl));
@@ -121,7 +124,6 @@
 
   h1,
   h2 {
-    --color-text: var(--color-primary);
     --line-height-min: 1.25;
     --line-height-max: 1;
 
@@ -129,11 +131,6 @@
     font-weight: 200;
     line-height: var(--line-height);
     padding-block: calc(var(--grid-correction, 0) / 2);
-  }
-
-  h1 {
-    --font-size-min: var(--h1-min);
-    --font-size-max: var(--h1-max);
   }
 
   h2 {

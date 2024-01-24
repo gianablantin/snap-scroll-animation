@@ -1,37 +1,98 @@
 .site-header {
-  display: flex;
-  justify-content: space-between;
+  overflow: auto;
   padding-block: calc(var(--spacing) / 2);
   position: fixed;
-  inset-block-start: 0;
+  inset-block-end: 0;
   inset-inline: 0;
   z-index: 10000;
+
+  &::after {
+    background: linear-gradient(to right, transparent, black);
+    content: '';
+    display: block;
+    position: fixed;
+    inset-block-end: calc(var(--spacing) / 2);
+    inset-inline-end: 0;
+    width: 33%;
+    height: calc(var(--spacing) * 1.5 + 2px);
+  }
+
+  @media (min-width: 64rem) {
+    display: flex;
+    inset-block-start: 0;
+    inset-block-end: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}
+
+.fieldset-wrapper {
+  --height: calc(var(--spacing) * 2);
+
+  border-radius: calc(var(--height) / 2);
+  overflow: hidden;
+
+  /* Prevent aliased border due to overflow clipping with border-radius */
+  padding-inline: 1px;
 }
 
 fieldset {
   --font-size-min: 14;
   --font-size-max: 16;
-  --height: calc(var(--spacing) * 2);
 
   background-color: hsla(0deg, 0%, 0%, 0.5);
   backdrop-filter: blur(10px);
   border: 1px solid var(--color-ui);
-  border-radius: calc(var(--height) / 2);
+  border-radius: inherit;
   display: flex;
   font-size: var(--font-size);
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
+  width: max-content;
+
+  @media (min-width: 64rem) {
+    margin: 0;
+  }
 }
 
 label {
+  --transition: 0.01s;
+
+  border-radius: inherit;
+  overflow: hidden;
   padding-inline: var(--spacing);
   padding-block: calc(var(--spacing) / 4);
+  position: relative;
+  transition: var(--transition) linear;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    background-color: var(--color-ui);
+    border-radius: inherit;
+    display: block;
+    transform: translateX(100.5%);
+    transition: inherit;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
 }
 
 :checked + label {
-  background-color: var(--color-ui);
-  border-radius: inherit;
-  color: var(--color-text);
+  --transition: 0.25s;
+
+  color: var(--color-background);
+  overflow: visible;
+
+  &::before {
+    transform: translateX(0);
+  }
+
+  ~ label::before {
+    transform: translateX(-100.5%);
+  }
 }
 
 legend {
@@ -40,18 +101,6 @@ legend {
 
 input {
   accent-color: var(--color-primary);
-}
-
-h1 {
-  --font-size-min: 14;
-  --font-size-max: 16;
-
-  color: var(--color-text);
-  font-family: var(--font-family-default);
-  font-size: var(--font-size);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  margin: 0;
 }
 
 /* Hides elements visually, leaves accessible to screenreaders */
@@ -67,6 +116,20 @@ h1 {
   height: 1px;
 }
 
+@media (min-width: 64rem) {
+  h1.sr-only {
+    --font-size-min: 14;
+    --font-size-max: 16;
+
+    all: unset;
+    color: var(--color-text);
+    font-family: var(--font-family-default);
+    font-size: var(--font-size);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+}
 
 nav {
   --indicator-number: 5;
@@ -176,17 +239,3 @@ footer {
     mix-blend-mode: hue;
   }
 }
-
-/*
- Image position:
-
- Maximum width does not exceed 30vw
- No maximum height
-
-  Image is floated to the left
-
-  If image height is larger than screen height, image is positioned at the top of the screen
-  If image height is smaller than screen height, image is positioned at the bottom of the screen
-  If image height is considerably smaller than screen height, image is centered vertically
-
-*/

@@ -16,12 +16,14 @@
   <link rel="stylesheet" href="./src/sections.css" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..400;1,9..144,100..400&family=Noto+Sans+Display:wght@200..700&display=swap" rel="stylesheet">
   <style>
+    @layer base, rhythm, layout, components, default, overwrites;
+
     html {
       /* Create a snapping rule on the html element */
       scroll-snap-type: y mandatory;
 
       /* Create a timeline scope, so we can target any element on the page */
-      timeline-scope: --section, --main;
+      timeline-scope: --section, --main, --site-header;
     }
 
     /* We'll want to match these colors for the best melty effect */
@@ -116,11 +118,29 @@
       }
     }
 
+    /* Remove gradient indicator on scroll-to-end (visible on small screens */
+
+    .site-header label:last-of-type {
+      view-timeline: --site-header inline;
+    }
+
+    .site-header::after {
+      animation: fade-scroll ease-in-out both;
+      animation-timeline: --site-header;
+      animation-range: entry-crossing;
+    }
+
+    @keyframes fade-scroll {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
       }
     }
 
     /* Change animation based on radio checked */
-
     body:has([value=horizontal-scroll]:checked) .content {
       animation-name: horizontal-scroll;
       /* 
@@ -129,21 +149,18 @@
       */
       animation-fill-mode: both;
       animation-timeline: --section;
-
     }
 
     body:has([value=backwards-scroll]:checked) .content {
       animation-name: backwards-scroll;
       animation-fill-mode: both;
       animation-timeline: --section;
-
     }
 
     body:has([value=zoom-scroll]:checked) .content {
       animation-name: zoom-scroll;
       animation-fill-mode: both;
       animation-timeline: --section;
-
     }
 
     /* Alternative animations */
@@ -245,24 +262,28 @@
 
 <body>
   <header class="site-header">
-    <h1>Snapping scroll animation demo</h1>
+    <h1 class="sr-only">Snapping scroll animation demo</h1>
 
-    <fieldset>
-      <legend class="sr-only">Effects</legend>
+    <!-- Because Chrome crashes if an overflow is set on the fieldset while a named timeline is on a child element -->
+    <!-- ¯\_(ツ)_/¯ -->
+    <div class="fieldset-wrapper">
+      <fieldset>
+        <legend class="sr-only">Effects</legend>
 
-      <!-- radio buttons for each of the @keyframes above -->
-      <input type="radio" id="blink-effect" name="effect" value="blink" checked class="sr-only">
-      <label for="blink-effect">Blink</label>
+        <!-- radio buttons for each of the @keyframes above -->
+        <input type="radio" id="blink-effect" name="effect" value="blink" checked class="sr-only">
+        <label for="blink-effect">Blink</label>
 
-      <input type="radio" id="horizontal-scroll-effect" name="effect" value="horizontal-scroll" class="sr-only">
-      <label for="horizontal-scroll-effect">Horizontal scroll</label>
+        <input type="radio" id="horizontal-scroll-effect" name="effect" value="horizontal-scroll" class="sr-only">
+        <label for="horizontal-scroll-effect">Horizontal scroll</label>
 
-      <input type="radio" id="backwards-scroll-effect" name="effect" value="backwards-scroll" class="sr-only">
-      <label for="backwards-scroll-effect">Backwards scroll</label>
+        <input type="radio" id="backwards-scroll-effect" name="effect" value="backwards-scroll" class="sr-only">
+        <label for="backwards-scroll-effect">Backwards scroll</label>
 
-      <input type="radio" id="zoom-scroll-effect" name="effect" value="zoom-scroll" class="sr-only">
-      <label for="zoom-scroll-effect">Zoom scroll</label>
-    </fieldset>
+        <input type="radio" id="zoom-scroll-effect" name="effect" value="zoom-scroll" class="sr-only">
+        <label for="zoom-scroll-effect">Zoom scroll</label>
+      </fieldset>
+    </div>
 
     <nav>
       <ul class="indicator">

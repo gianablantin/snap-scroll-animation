@@ -1,14 +1,14 @@
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   padding-block: var(--spacing);
   padding-inline: inherit;
   position: relative;
   height: 100%;
 
-  @media (min-width: 800px) {
+  @media (min-width: 64rem) {
     flex-direction: row;
     justify-content: space-between;
   }
@@ -26,12 +26,14 @@
     --color-property: var(--color-highlight);
 
     color: var(--color-selector);
+    font-weight: 700;
   }
 
   .property {
     --color-property: var(--color-highlight);
 
     color: var(--color-property);
+    font-weight: 700;
   }
 
   ul {
@@ -60,7 +62,7 @@ h2,
   /* Making space for the scroll indicators */
   padding-inline-end: calc(var(--min-tap-size) + var(--spacing));
 
-  @media (min-width: 80em) {
+  @media (min-width: 64rem) {
     padding-inline-end: 0;
   }
 
@@ -70,42 +72,62 @@ h2,
 }
 
 h2 {
-  margin-block-start: 0;
+  line-height: 1;
+  margin-block: var(--spacing);
   text-shadow: 1px 2px 0.1em hsla(0, 0%, 0%, 0.5);
+  width: 100%;
 
-  @media (min-width: 800px) {
+  @media (min-width: 64rem) {
     flex: 1;
+    margin-block-end: 0;
   }
 }
 
 .text {
   --intrinsic-width: 587;
   --intrinsic-height: 930;
-  --height: min(100dvb, 33vw * var(--intrinsic-height) / var(--intrinsic-width));
-  --offset: calc(var(--height) / 3);
-  position: relative;
+  --height: 200px;
+  --offset: 200px;
 
-  @media (min-width: 800px) {
+
+  img {
+    opacity: 0.2;
+    position: absolute;
+    inset: 0;
+    object-fit: contain;
+    object-position: top center;
+    z-index: -1;
+  }
+
+  @media (min-width: 64rem) {
+    --height: min(100dvb, 33vw * var(--intrinsic-height) / var(--intrinsic-width));
+    --offset: calc(var(--height) / 3);
+
+    flex: 1;
     font-weight: 200;
     padding-block-start: var(--spacing);
-    flex: 1;
+    position: relative;
     z-index: -1;
 
     img {
       float: inline-start;
       height: var(--height);
       margin-left: calc((1 - var(--intrinsic-width) / var(--intrinsic-height)) * -100%);
+      opacity: 0.65;
+      position: relative;
+      inset: auto;
       shape-outside: var(--image);
       shape-margin: var(--spacing);
-      opacity: 0.65;
 
-      /* TODO: Fix this */
-      /* This doesn't work with shape-outside in Chrome */
-      /* It does work in Firefox */
-      /* Something about the margin box, and Chrome defaulting to 0 on negative margins */
-      position: relative;
-      top: var(--offset);
-      margin-top: calc(var(--offset) * -2);
+      & + * {
+        margin-top: calc(var(--spacing) * 3);
+      }
+    }
+  }
+
+  @media (min-width: 90rem) and (min-height: 35rem) {
+    img + * {
+      margin-top: var(--offset);
     }
   }
 }
@@ -136,8 +158,8 @@ section:nth-child(4) {
 }
 
 section:nth-child(5) {
-  --color-highlight: var(--color-primary);
-  --color-selector: var(--color-secondary);
+  --color-highlight: var(--color-purple);
+  --color-selector: var(--color-red-2);
   --image: url('../src/img/flower-purple.png');
   --margin-top: 10dvi;
 }
