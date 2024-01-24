@@ -262,7 +262,7 @@
 
 <body>
   <header class="site-header">
-    <h1 class="sr-only">Snapping scroll animation demo</h1>
+    <h1 class="sr-only">Scrollnapping animations</h1>
 
     <!-- Because Chrome crashes if an overflow is set on the fieldset while a named timeline is on a child element -->
     <!-- ¯\_(ツ)_/¯ -->
@@ -316,8 +316,7 @@
           <img src="src/img/flower-yellow.png" alt="">
           <p>We set the scrolling element, in this case our <code class="selector">section</code> elements, to track their view() position inside the browser using <code class="property">view-timeline: --section;</code>. We had previous set the <code class="property">timeline-scope: --section</code> up in our <code class="selector">HTML</code> element, so we can access it from anywhere in the document.</p>
 
-          <p>And then we set the child <code class="selector">.content</code> as the animated element using <code class="property">animation-timeline: --section;
-</code>. The <code class="selector">.content</code> element will now animate based on its parent <code class="selector">section</code>'s position. This is important due to how we're handling the layout in the next section.</p>
+          <p>We animate the <code class="selector">.content</code> children using <code class="property">animation-timeline: --section;</code>. The <code class="selector">.content</code> element will now animate based on its parent <code class="selector">section</code>'s position. This is important due to how we're handling the layout in the next section.</p>
         </div>
       </div>
     </section>
@@ -329,7 +328,7 @@
           <img src="src/img/flower-blue.png" alt="">
           <p>We set the <code class="selector">.content</code> elements to <code class="property">position: fixed</code>, so they're removed from the normal document flow and stack on top of each other. We give them a solid background, so we can see only one at a time.</p>
 
-          <p>Their parent <code class="selector">section</code>s are positioned as normal, taking up space, scroll-snapping, and powering the <code class="property">animation-timeline</code>.</p>
+          <p>Their parent <code class="selector">section</code>s are positioned as normal in the layer below, taking up space, scroll-snapping, and powering the <code class="property">animation-timeline</code>.</p>
         </div>
       </div>
     </section>
@@ -341,7 +340,7 @@
           <img src="src/img/flower-red.png" alt="">
           <p>By setting the <code class="selector">.content</code> elements to <code class="property">position: fixed</code>, we can now transition between them without a visible scrolling movement.</p>
 
-          <p>We create a normal <code class="selector">@keyframe</code> animation with opacity and use <code class="property">filter: blur(0.5rem) contrast(4)</code> to create a sort of fade-in-out style with some extra pizzaz.</p>
+          <p>We create a normal <code class="selector">@keyframe</code> animation to our liking to transition between them. Check the navigation menu to see different effects.</p>
         </div>
       </div>
     </section>
@@ -352,10 +351,10 @@
         <div class="text">
           <img src="src/img/flower-purple.png" alt="">
           <ul>
-            <li>Scrolling animations are not currently available in Firefox. This demo is using a pollyfill.</li>
-            <li>This is a somewhat fragile layout since we're using <code class="selector">position: fixed</code>. You need to carefully manage stacking contexts</li>
-            <li>Snapping points have their own caveats, such as concerns regarding scroll hijacking and content taller than the viewport becoming inaccessible.</li>
-            <li>This particular effect uses the <code class="property">contrast()</code> filter, which modifies the colors of the entire section. That's why the background is set to black (or can be set to white): at max contrast already, the background won't appear to change during transition.</li>
+            <li>Scrolling animations are not currently available in Firefox. This demo is using a polyfill.</li>
+            <li>This layout is fragile due to the use of <code class="property">position: fixed</code>. You need to carefully manage stacking contexts.</li>
+            <li>Snapping points have their own caveats, such as content taller than the viewport becoming inaccessible, along with the general annoyance of scrolljacking.</li>
+            <li>The <code class="selector">blink</code> effect uses the <code class="property">contrast()</code> filter, which modifies the colors of the entire section. Thus, the background is set to black (or white), ensuring that it appears unchanged during transitions due to already being at maximum contrast.</li>
           </ul>
         </div>
       </div>
