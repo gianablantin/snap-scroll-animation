@@ -93,6 +93,7 @@ h2 {
   --offset: 200px;
 
   & img {
+    display: block;
     opacity: 0.2;
     position: absolute;
     inset: 0;

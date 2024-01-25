@@ -1,10 +1,5 @@
 @layer base, rhythm, layout, components, default, overwrites;
 
-/*
- * This file should control the site-specific variables, colors, fonts etc
- * It should not contain any specific styles for pages, sections, or components
- */
-
 @layer base {
   :root {
     /*
@@ -37,30 +32,6 @@
 
     --color-link: var(--color-primary);
     --color-link-hover: var(--color-secondary);
-
-    --color-scrollbar-foreground: var(--color-ui);
-
-    scrollbar-width: auto;
-    scrollbar-color: var(--color-scrollbar-foreground, hsla(0, 0%, 0%, 0.75)) var(--color-scrollbar-background, transparent);
-
-    &::-webkit-scrollbar {
-      width: var(--scrollbar-size, 10px);
-      height: var(--scrollbar-size, 10px);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: var(--color-scrollbar-foreground, hsla(0, 0%, 0%, 0.75));
-      border-radius: calc(var(--scrollbar-size, 10px) / 2);
-    }
-
-    &::-webkit-scrollbar-track {
-      background: var(--color-scrollbar-background, transparent);
-    }
-  }
-
-  ::selection {
-    background-color: var(--color-primary);
-    color: var(--color-white);
   }
 }
 
