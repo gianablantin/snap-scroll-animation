@@ -5,19 +5,6 @@
   inset-inline: 0;
   z-index: 10000;
 
-  @supports(animation-timeline: view()) {
-    &::after {
-      background-image: linear-gradient(to right, transparent, black);
-      content: '';
-      display: block;
-      position: fixed;
-      inset-block-end: calc(var(--spacing) / 2);
-      inset-inline-end: 0;
-      width: 33%;
-      height: calc(var(--spacing) * 1.5 + 2px);
-    }
-  }
-
   @media (min-width: 64rem) {
     display: flex;
     inset-block-start: 0;
@@ -25,6 +12,19 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
+  }
+}
+
+@supports(animation-timeline: view()) {
+  .site-header::after {
+    background-image: linear-gradient(to right, transparent, black);
+    content: '';
+    display: block;
+    position: fixed;
+    inset-block-end: calc(var(--spacing) / 2);
+    inset-inline-end: 0;
+    width: 33%;
+    height: calc(var(--spacing) * 1.5 + 2px);
   }
 }
 
@@ -91,7 +91,7 @@ label {
     transform: translateX(0);
   }
 
-  ~ label::before {
+  & ~ label::before {
     transform: translateX(-100.5%);
   }
 }
@@ -158,7 +158,7 @@ nav {
   margin-block-start: calc(var(--indicator-total-height) / -2);
   z-index: 100;
 
-  ul {
+  & ul {
     display: flex;
     flex-direction: column;
     gap: var(--indicator-gap);
@@ -184,20 +184,20 @@ nav {
     }
   }
 
-  li:first-of-type {
+  & li:first-of-type {
     margin-block-start: calc(var(--indicator-padding) * -1);
   }
 
-  li:last-of-type {
+  & li:last-of-type {
     margin-block-end: calc(var(--indicator-padding) * -1);
   }
 
-  li,
-  a {
+  & li,
+  & a {
     display: block;
   }
 
-  a {
+  & a {
     --color-link: var(--color-text);
 
     padding: var(--indicator-padding);
@@ -211,8 +211,10 @@ nav {
       height: var(--indicator-size);
     }
   }
+}
 
-  @supports not (animation-timeline: scroll()) {
+@supports not (animation-timeline: scroll()) {
+  nav {
     display: none;
   }
 }

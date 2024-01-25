@@ -13,30 +13,30 @@
     justify-content: space-between;
   }
 
-  strong,
-  code {
+  & strong,
+  & code {
     color: var(--color-highlight);
   }
 
-  code {
+  & code {
     font-family: var(--font-family-default);
   }
 
-  .selector {
+  & .selector {
     --color-property: var(--color-highlight);
 
     color: var(--color-selector);
     font-weight: 700;
   }
 
-  .property {
+  & .property {
     --color-property: var(--color-highlight);
 
     color: var(--color-property);
     font-weight: 700;
   }
 
-  ul {
+  & ul {
     --font-size-min: 14;
     --font-size-max: 16;
 
@@ -47,7 +47,7 @@
     padding: 0;
   }
 
-  li {
+  & li {
     margin-bottom: calc(var(--spacing) / 2);
 
     &::marker {
@@ -65,8 +65,11 @@ h2,
   @media (min-width: 64rem) {
     padding-inline-end: 0;
   }
+}
 
-  @supports not (animation-timeline: scroll()) {
+@supports not (animation-timeline: scroll()) {
+  h2,
+  .text {
     padding-inline-end: 0;
   }
 }
@@ -89,8 +92,7 @@ h2 {
   --height: 200px;
   --offset: 200px;
 
-
-  img {
+  & img {
     opacity: 0.2;
     position: absolute;
     inset: 0;
@@ -109,7 +111,7 @@ h2 {
     position: relative;
     z-index: -1;
 
-    img {
+    & img {
       float: inline-start;
       height: var(--height);
       margin-left: calc((1 - var(--intrinsic-width) / var(--intrinsic-height)) * -100%);
@@ -126,13 +128,13 @@ h2 {
   }
 
   @media (min-width: 64rem) and (min-height: 45rem) {
-    img + * {
+    & img + * {
       margin-top: calc(var(--spacing) * 4);
     }
   }
 
   @media (min-width: 90rem) and (min-height: 35rem) {
-    img + * {
+    & img + * {
       margin-top: var(--offset);
     }
   }
