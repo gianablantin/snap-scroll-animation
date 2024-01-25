@@ -2,6 +2,7 @@ import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
 
 export default {
+  base: '/snap-scroll-animation/',
   css: {
     transformer: 'lightningcss',
     lightningcss: {
