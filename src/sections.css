@@ -1,174 +1,176 @@
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-block: var(--spacing);
-  padding-inline: inherit;
-  position: relative;
-  height: 100%;
+@layer default {
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-block: var(--spacing);
+    padding-inline: inherit;
+    position: relative;
+    height: 100%;
 
-  @media (min-width: 64rem) {
-    flex-direction: row;
-    justify-content: space-between;
-  }
+    @media (min-width: 64rem) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
 
-  & strong,
-  & code {
-    color: var(--color-highlight);
-  }
-
-  & code {
-    font-family: var(--font-family-default);
-  }
-
-  & .selector {
-    --color-property: var(--color-highlight);
-
-    color: var(--color-selector);
-    font-weight: 700;
-  }
-
-  & .property {
-    --color-property: var(--color-highlight);
-
-    color: var(--color-property);
-    font-weight: 700;
-  }
-
-  & ul {
-    --font-size-min: 14;
-    --font-size-max: 16;
-
-    font-size: var(--font-size);
-    font-weight: 400;
-    list-style-position: inside;
-    margin: 0;
-    padding: 0;
-  }
-
-  & li {
-    margin-bottom: calc(var(--spacing) / 2);
-
-    &::marker {
-      content: '🌷 ';
+    & strong,
+    & code {
       color: var(--color-highlight);
     }
-  }
-}
 
-h2,
-.text {
-  /* Making space for the scroll indicators */
-  padding-inline-end: calc(var(--min-tap-size) + var(--spacing));
+    & code {
+      font-family: var(--font-family-default);
+    }
 
-  @media (min-width: 64rem) {
-    padding-inline-end: 0;
-  }
-}
+    & .selector {
+      --color-property: var(--color-highlight);
 
-@supports not (animation-timeline: scroll()) {
-  h2,
-  .text {
-    padding-inline-end: 0;
-  }
-}
+      color: var(--color-selector);
+      font-weight: 700;
+    }
 
-h2 {
-  line-height: 1;
-  margin-block: var(--spacing);
-  text-shadow: 1px 2px 0.1em hsla(0, 0%, 0%, 0.5);
-  width: 100%;
+    & .property {
+      --color-property: var(--color-highlight);
 
-  @media (min-width: 64rem) {
-    flex: 1;
-    margin-block-end: 0;
-  }
-}
+      color: var(--color-property);
+      font-weight: 700;
+    }
 
-.text {
-  --intrinsic-width: 587;
-  --intrinsic-height: 930;
-  --height: 200px;
-  --offset: 200px;
+    & ul {
+      --font-size-min: 14;
+      --font-size-max: 16;
 
-  & img {
-    display: block;
-    opacity: 0.2;
-    position: absolute;
-    inset: 0;
-    object-fit: contain;
-    object-position: top center;
-    z-index: -1;
-  }
+      font-size: var(--font-size);
+      font-weight: 400;
+      list-style-position: inside;
+      margin: 0;
+      padding: 0;
+    }
 
-  @media (min-width: 64rem) {
-    --height: min(100dvb, 33vw * var(--intrinsic-height) / var(--intrinsic-width));
-    --offset: calc(var(--height) / 3);
+    & li {
+      margin-bottom: calc(var(--spacing) / 2);
 
-    flex: 1;
-    font-weight: 200;
-    padding-block-start: var(--spacing);
-    position: relative;
-    z-index: -1;
-
-    & img {
-      float: inline-start;
-      height: var(--height);
-      margin-left: calc((1 - var(--intrinsic-width) / var(--intrinsic-height)) * -100%);
-      opacity: 0.65;
-      position: relative;
-      inset: auto;
-      shape-outside: var(--image);
-      shape-margin: var(--spacing);
-
-      & + * {
-        margin-top: calc(var(--spacing) * 3);
+      &::marker {
+        content: '🌷 ';
+        color: var(--color-highlight);
       }
     }
   }
 
-  @media (min-width: 64rem) and (min-height: 45rem) {
-    & img + * {
-      margin-top: calc(var(--spacing) * 4);
+  h2,
+  .text {
+    /* Making space for the scroll indicators */
+    padding-inline-end: calc(var(--min-tap-size) + var(--spacing));
+
+    @media (min-width: 64rem) {
+      padding-inline-end: 0;
     }
   }
 
-  @media (min-width: 90rem) and (min-height: 35rem) {
-    & img + * {
-      margin-top: var(--offset);
+  @supports not (animation-timeline: scroll()) {
+    h2,
+    .text {
+      padding-inline-end: 0;
     }
   }
-}
 
-section:nth-child(1) {
-  --color-highlight: var(--color-primary);
-  --color-selector: var(--color-secondary);
-  --image: url('../src/img/flower-white.png');
-}
+  h2 {
+    line-height: 1;
+    margin-block: var(--spacing);
+    text-shadow: 1px 2px 0.1em hsla(0, 0%, 0%, 0.5);
+    width: 100%;
 
-section:nth-child(2) {
-  --color-highlight: var(--color-yellow);
-  --color-selector: var(--color-green);
-  --image: url('../src/img/flower-yellow.png');
-  --margin-top: 10dvi;
-}
+    @media (min-width: 64rem) {
+      flex: 1;
+      margin-block-end: 0;
+    }
+  }
 
-section:nth-child(3) {
-  --color-highlight: var(--color-secondary);
-  --color-selector: var(--color-primary);
-  --image: url('../src/img/flower-blue.png');
-}
+  .text {
+    --intrinsic-width: 587;
+    --intrinsic-height: 930;
+    --height: 200px;
+    --offset: 200px;
 
-section:nth-child(4) {
-  --color-highlight: var(--color-red);
-  --color-selector: var(--color-green-2);
-  --image: url('../src/img/flower-red.png');
-}
+    & img {
+      display: block;
+      opacity: 0.2;
+      position: absolute;
+      inset: 0;
+      object-fit: contain;
+      object-position: top center;
+      z-index: -1;
+    }
 
-section:nth-child(5) {
-  --color-highlight: var(--color-purple);
-  --color-selector: var(--color-red-2);
-  --image: url('../src/img/flower-purple.png');
-  --margin-top: 10dvi;
+    @media (min-width: 64rem) {
+      --height: min(100dvb, 33vw * var(--intrinsic-height) / var(--intrinsic-width));
+      --offset: calc(var(--height) / 3);
+
+      flex: 1;
+      font-weight: 200;
+      padding-block-start: var(--spacing);
+      position: relative;
+      z-index: -1;
+
+      & img {
+        float: inline-start;
+        height: var(--height);
+        margin-left: calc((1 - var(--intrinsic-width) / var(--intrinsic-height)) * -100%);
+        opacity: 0.65;
+        position: relative;
+        inset: auto;
+        shape-outside: var(--image);
+        shape-margin: var(--spacing);
+
+        & + * {
+          margin-top: calc(var(--spacing) * 3);
+        }
+      }
+    }
+
+    @media (min-width: 64rem) and (min-height: 45rem) {
+      & img + * {
+        margin-top: calc(var(--spacing) * 4);
+      }
+    }
+
+    @media (min-width: 90rem) and (min-height: 35rem) {
+      & img + * {
+        margin-top: var(--offset);
+      }
+    }
+  }
+
+  section:nth-child(1) {
+    --color-highlight: var(--color-primary);
+    --color-selector: var(--color-secondary);
+    --image: url('/src/img/flower-white.png');
+  }
+
+  section:nth-child(2) {
+    --color-highlight: var(--color-yellow);
+    --color-selector: var(--color-green);
+    --image: url('/src/img/flower-yellow.png');
+    --margin-top: 10dvi;
+  }
+
+  section:nth-child(3) {
+    --color-highlight: var(--color-secondary);
+    --color-selector: var(--color-primary);
+    --image: url('/src/img/flower-blue.png');
+  }
+
+  section:nth-child(4) {
+    --color-highlight: var(--color-red);
+    --color-selector: var(--color-green-2);
+    --image: url('/src/img/flower-red.png');
+  }
+
+  section:nth-child(5) {
+    --color-highlight: var(--color-purple);
+    --color-selector: var(--color-red-2);
+    --image: url('/src/img/flower-purple.png');
+    --margin-top: 10dvi;
+  }
 }

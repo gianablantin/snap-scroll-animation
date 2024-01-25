@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="./src/sections.css" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..400;1,9..144,100..400&family=Noto+Sans+Display:wght@200..700&display=swap" rel="stylesheet">
   <style>
-    @layer base, rhythm, layout, components, default, overwrites;
+    @layer base, rhythm, layout, default;
 
     html {
       /* Create a snapping rule on the html element */
@@ -59,8 +59,7 @@
       --contrast: 4;
       --blur: 0.5rem;
 
-      animation: blink ease-in-out;
-      animation-fill-mode: both;
+      animation: blink ease-in-out both;
       animation-timeline: --section;
     }
 
@@ -78,7 +77,6 @@
         opacity: 1;
         visibility: visible;
       }
-
     }
 
     /* 
@@ -119,7 +117,6 @@
     }
 
     /* Remove gradient indicator on scroll-to-end (visible on small screens */
-
     .site-header label:last-of-type {
       view-timeline: --site-header inline;
     }
@@ -141,32 +138,30 @@
     }
 
     /* Change animation based on radio checked */
-    body:has([value=horizontal-scroll]:checked) .content {
-      animation-name: horizontal-scroll;
+    body:has([value="horizontal-scroll"]:checked) .content {
       /* 
-        The only reason we're repeat these two properties instead of using 
-        the default values already set is so the polyfill will pick them up 
+        The only reason we're repeat these two properties instead of simply 
+        setting `animation-name` is so the polyfill will pick them up 
+        They're flaky though and tend to get stuck. You might need to
+        refresh the page and select an option before scrolling
       */
-      animation-fill-mode: both;
+      animation: horizontal-scroll ease-in-out both;
       animation-timeline: --section;
     }
 
-    body:has([value=backwards-scroll]:checked) .content {
-      animation-name: backwards-scroll;
-      animation-fill-mode: both;
+    body:has([value="backwards-scroll"]:checked) .content {
+      animation: backwards-scroll ease-in-out both;
       animation-timeline: --section;
     }
 
-    body:has([value=zoom-scroll]:checked) .content {
-      animation-name: zoom-scroll;
-      animation-fill-mode: both;
+    body:has([value="zoom-scroll"]:checked) .content {
+      animation: zoom-scroll ease-in-out both;
       animation-timeline: --section;
     }
 
     /* Alternative animations */
     /* Very cool, try it */
     @keyframes horizontal-scroll {
-
       0% {
         transform: translate3d(100%, 0%, 0);
       }
@@ -178,12 +173,10 @@
       100% {
         transform: translate3d(-100%, 0%, 0);
       }
-
     }
 
     /* Befuddling, try it */
     @keyframes backwards-scroll {
-
       0% {
         transform: translate3d(0%, -100%, 0);
       }
@@ -195,12 +188,10 @@
       100% {
         transform: translate3d(0%, 100%, 0);
       }
-
     }
 
     /* WIP */
     @keyframes zoom-scroll {
-
       0% {
         filter: blur(5rem);
         transform: scale(0);
@@ -220,41 +211,6 @@
         transform: scale(1.5);
         opacity: 0;
         visibility: hidden;
-      }
-
-    }
-
-    /* WIP, trying to get the sections to melt together*/
-    @keyframes blink-alternate {
-
-      0%,
-      100% {
-        filter: blur(6px) contrast(1);
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      50% {
-        /* Compensate for global contrast */
-        filter: blur(0) contrast(calc(1 / var(--contrast)));
-        opacity: 1;
-        visibility: visible;
-      }
-
-    }
-
-    .alternate {
-
-      /* 
-        By putting the contrast filter above everything, including sections mid-opacity,
-        we end up with a more cohesive effect at the cost of performance.
-      */
-      main::after {
-        content: '';
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        backdrop-filter: contrast(var(--contrast));
       }
     }
   </style>

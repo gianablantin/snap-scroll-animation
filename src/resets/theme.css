@@ -1,4 +1,4 @@
-@layer base, rhythm, layout, components, default, overwrites;
+@layer base, rhythm, layout, default;
 
 @layer base {
   :root {
